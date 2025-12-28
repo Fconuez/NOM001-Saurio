@@ -1,0 +1,7 @@
+{
+  "name": "NOM01Sauria - Suite de Ingeniería Eléctrica",
+  "description": "Una suite avanzada para ingenieros eléctricos basada en la NOM-001-SEDE-2012, con herramientas de cálculo, gestión de proyectos e inteligencia artificial integrada para consultas normativas complejas.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
