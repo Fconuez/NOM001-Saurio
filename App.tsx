@@ -11,6 +11,7 @@ import MotorCalculation from './screens/MotorCalculation';
 import TransformerCalculation from './screens/TransformerCalculation';
 import LoadSchedule from './screens/LoadSchedule';
 import ProjectManagement from './screens/ProjectManagement';
+import Report from './screens/Report';
 import AIChatPanel from './components/AIChatPanel';
 
 const App: React.FC = () => {
@@ -27,6 +28,7 @@ const App: React.FC = () => {
           <Route path="/motor" element={<MotorCalculation />} />
           <Route path="/transformer" element={<TransformerCalculation />} />
           <Route path="/schedule" element={<LoadSchedule />} />
+          <Route path="/report" element={<Report />} />
         </Routes>
       </Layout>
       <AIChatPanel />

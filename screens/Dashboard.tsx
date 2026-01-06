@@ -11,6 +11,10 @@ const Dashboard: React.FC = () => {
           <p className="text-text-secondary text-base font-normal">Gestión centralizada de integridad normativa NOM-001-SEDE-2012.</p>
         </div>
         <div className="flex gap-3">
+          <Link to="/report" className="flex items-center gap-2 px-5 py-2.5 bg-[#283039] rounded-lg text-sm font-semibold text-white hover:bg-[#3b4754] transition-all">
+            <span className="material-symbols-outlined text-sm">picture_as_pdf</span>
+            Generar Reporte
+          </Link>
           <Link to="/config" className="flex items-center gap-2 px-5 py-2.5 bg-primary rounded-lg text-sm font-semibold text-white hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20">
             <span className="material-symbols-outlined text-sm">add</span>
             Nuevo Proyecto

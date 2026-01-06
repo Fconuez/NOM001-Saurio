@@ -27,4 +27,17 @@ export const NAV_ITEMS = [
   { label: 'Motores', path: '/motor', icon: 'settings' },
   { label: 'Transformadores', path: '/transformer', icon: 'electrical_services' },
   { label: 'Cédula de Cargas', path: '/schedule', icon: 'view_list' },
+  { label: 'Generar Reporte', path: '/report', icon: 'picture_as_pdf' },
 ];
+
+export const STORAGE_KEYS = {
+  PROJECTS: 'nom01_global_projects',
+  ACTIVE_PROJECT_ID: 'nom01_active_project_id',
+  VOLTAGE_DROP: 'nom01_vd_',
+  CONDUIT: 'nom01_conduit_',
+  AMPACITY: 'nom01_ampacity_',
+  PROTECTION: 'nom01_prot_',
+  MOTOR: 'nom01_motor_',
+  TRANSFORMER: 'nom01_trans_',
+  LOAD_SCHEDULE: 'nom01_schedule_',
+};

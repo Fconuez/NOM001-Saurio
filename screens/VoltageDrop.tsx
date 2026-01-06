@@ -1,6 +1,6 @@
 
-import React, { useState, useMemo } from 'react';
-import { TABLE_8_CONDUCTORS } from '../constants';
+import React, { useState, useMemo, useEffect } from 'react';
+import { TABLE_8_CONDUCTORS, STORAGE_KEYS } from '../constants';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 
 interface CircuitFeed {
@@ -14,10 +14,28 @@ interface CircuitFeed {
 }
 
 const VoltageDrop: React.FC = () => {
+  const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
   const [circuits, setCircuits] = useState<CircuitFeed[]>([
     { id: '1', name: 'Alimentador Gral', length: 75, current: 120, voltage: 480, awg: '1/0', isThreePhase: true }
   ]);
   const [activeCircuitId, setActiveCircuitId] = useState<string>('1');
+
+  useEffect(() => {
+    const pId = localStorage.getItem(STORAGE_KEYS.ACTIVE_PROJECT_ID);
+    if (pId) {
+      setActiveProjectId(pId);
+      const saved = localStorage.getItem(STORAGE_KEYS.VOLTAGE_DROP + pId);
+      if (saved) {
+        setCircuits(JSON.parse(saved));
+      }
+    }
+  }, []);
+
+  const saveToStorage = (updatedCircuits: CircuitFeed[]) => {
+    if (activeProjectId) {
+      localStorage.setItem(STORAGE_KEYS.VOLTAGE_DROP + activeProjectId, JSON.stringify(updatedCircuits));
+    }
+  };
 
   const activeCircuit = useMemo(() => 
     circuits.find(c => c.id === activeCircuitId) || circuits[0], 
@@ -26,7 +44,7 @@ const VoltageDrop: React.FC = () => {
   const addCircuit = () => {
     if (circuits.length >= 30) return;
     const newId = Math.random().toString(36).substr(2, 9);
-    setCircuits([...circuits, { 
+    const updated = [...circuits, { 
       id: newId, 
       name: `Circuito ${circuits.length + 1}`, 
       length: 30, 
@@ -34,8 +52,10 @@ const VoltageDrop: React.FC = () => {
       voltage: 220, 
       awg: '12', 
       isThreePhase: false 
-    }]);
+    }];
+    setCircuits(updated);
     setActiveCircuitId(newId);
+    saveToStorage(updated);
   };
 
   const removeCircuit = (id: string) => {
@@ -43,10 +63,13 @@ const VoltageDrop: React.FC = () => {
     const newCircuits = circuits.filter(c => c.id !== id);
     setCircuits(newCircuits);
     if (activeCircuitId === id) setActiveCircuitId(newCircuits[0].id);
+    saveToStorage(newCircuits);
   };
 
   const updateCircuit = (id: string, updates: Partial<CircuitFeed>) => {
-    setCircuits(circuits.map(c => c.id === id ? { ...c, ...updates } : c));
+    const updated = circuits.map(c => c.id === id ? { ...c, ...updates } : c);
+    setCircuits(updated);
+    saveToStorage(updated);
   };
 
   const calculateVD = (c: CircuitFeed) => {
